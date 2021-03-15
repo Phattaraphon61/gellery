@@ -24,9 +24,6 @@ export default class detail extends Component {
       console.log(res['data'])
       this.setState({ data: res['data'] })
     })
-    if (localStorage.getItem('token') == null) {
-      window.location.href = 'login';
-    }
     if (localStorage.getItem('token') != null) {
       this.setState({ decode: jwt_decode(localStorage.getItem('token')) })
     }
@@ -56,9 +53,11 @@ export default class detail extends Component {
                 <li >
                   <a className="nav-link" style={{ cursor: "-webkit-grab", cursor: "grab" }}>{this.state.decode.name}</a>
                 </li>
-                <li >
-                  <a className="nav-link " style={{ color: "red", cursor: "-webkit-grab", cursor: "grab" }} onClick={this.logout}>Logout</a>
-                </li>
+                {localStorage.getItem('token') != null ?<li >
+                                    <a className="nav-link " style={{ color: "red" ,cursor:"-webkit-grab",cursor:"grab"}} onClick={this.logout}>Logout</a>
+                                </li>:<li >
+                                    <a className="nav-link " style={{ color: "blue" ,cursor:"-webkit-grab",cursor:"grab"}} onClick={this.logout}>Login</a>
+                                </li>}
                 {/* <li className="nav-item">
                   <a className="nav-link nav-link-3" href="about.html">About</a>
                 </li>
@@ -104,9 +103,9 @@ export default class detail extends Component {
                 {/* <p className="mb-4">
                   Please support us by making <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a PayPal donation</a>. Nam ex nibh, efficitur eget libero ut, placerat aliquet justo. Cras nec varius leo.
                 </p> */}
-                <div className="text-center mb-5">
+                {localStorage.getItem('token') != null?<div className="text-center mb-5">
                   <a href={`https://drive.google.com/uc?id=` + state + `&export=download`} className="btn btn-primary tm-btn-big">Download</a>
-                </div>
+                </div>:null}
                 {/* <div className="mb-4 d-flex flex-wrap">
                   <div className="mr-4 mb-2">
                     <span className="tm-text-gray-dark">Dimension: </span><span className="tm-text-primary">1920x1080</span>

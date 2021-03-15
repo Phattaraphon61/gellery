@@ -32,9 +32,6 @@ class Home extends React.Component {
             console.log(res['data'])
             this.setState({ data: res['data'] })
         })
-        if (localStorage.getItem('token') == null) {
-            window.location.href = 'login';
-        }
         if (localStorage.getItem('token') != null) {
             this.setState({ decode: jwt_decode(localStorage.getItem('token')) })
         }
@@ -83,9 +80,11 @@ class Home extends React.Component {
                                 <li >
                                     <a className="nav-link" style={{cursor:"-webkit-grab",cursor:"grab"}}>{this.state.decode.name}</a>
                                 </li>
-                                <li >
+                                {localStorage.getItem('token') != null ?<li >
                                     <a className="nav-link " style={{ color: "red" ,cursor:"-webkit-grab",cursor:"grab"}} onClick={this.logout}>Logout</a>
-                                </li>
+                                </li>:<li >
+                                    <a className="nav-link " style={{ color: "blue" ,cursor:"-webkit-grab",cursor:"grab"}} onClick={this.logout}>Login</a>
+                                </li>}
                                 {/* <li className="nav-item">
                   <a className="nav-link nav-link-3" href="about.html">About</a>
                 </li>
@@ -96,28 +95,15 @@ class Home extends React.Component {
                         </div>
                     </div>
                 </nav>
-                <div className="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src={image1}>
-
-                    {/* <form className="d-flex tm-search-form">
-            <input className="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success tm-search-btn" type="submit">
-              <i className="fas fa-search" />
-            </button>
-          </form> */}
-
-                    {/* <div>
-                        <input type="file" onChange={this.handleChange} />
-                    </div> */}
+                {localStorage.getItem('token') != null ?   <div className="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src={image1}>
                     <div style={{ width: "30%", textAlign: "center" }}>
                         <input class="form-control form-control-lg" type="file" onChange={e => this.setState({ file: e.target.files[0] })} />
                         <div style={{ paddingTop: "20px" }}>
                             <a className="btn btn-primary tm-btn-next" onClick={this.uploader}>submit</a>
                         </div>
-
                     </div>
+                </div>:null}
 
-
-                </div>
                 <div className="container-fluid tm-container-content tm-mt-60">
                     <div className="row mb-4">
                         <h2 className="col-6 tm-text-primary">
