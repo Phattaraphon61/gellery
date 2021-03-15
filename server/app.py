@@ -79,11 +79,10 @@ def singin():
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload_file():
   if request.method == 'POST':
-    print(request.files['myFile'].filename)
     f = request.files['myFile']
       # filename = secure_filename(f.filename)
       # f.save(os.path.join("files/",filename))
-    headers = {"Authorization": "Bearer ya29.a0AfH6SMCCYvGlxPlIgICDFW60LrZbJ7DIclbWj48Mld7rWoTtDsP1ktTMhsad_AEIRO2jU-zSHcD-QR42pJ5a2sDw2xchdWj6Z4lLGzC20R-ltvIkx_Gw1iC2wYrPT3ocApY27WlpzsE64AxgMpp1uWSQAel5"}
+    headers = {"Authorization": "Bearer ya29.a0AfH6SMAGS-Mm9S0gCHTNTPNnbzEBHvkBg9iu017w3_ybVgZESfYDx5v6UNXEdJRBJC-0o0RgvZ_1Zqucfskqa2mc1ODBPQCF7xLDtVuDI_wWsHkQgqupVZjIbl1IxpusmxOekx9wcxRzWPyOKI1Zzn0sbQKL"}
     para = {"name": f.filename,
               "parents": ["1lMBii79CfFiG7t9KcUS0cB-4EvmpV8Pf"]
             }
@@ -103,7 +102,6 @@ def setdata_file():
     nameuser = info['nameuser']
     imgname = info['imgname']
     idimg = info['idimg']
-    print(iduser,nameuser,imgname,idimg)
     sql = "INSERT INTO data (id, iduser,nameuser,imgname) VALUES (%s,%s,%s,%s)"
     val = (idimg,iduser,nameuser,imgname)
     mycursor.execute(sql, val)
@@ -117,11 +115,6 @@ def get_datas():
   mycursor.execute(sql)
   myresult = mycursor.fetchall()
   return {'status': 'success','data':myresult}
-@app.route('/viewdata')
-def get_datas():
-  sql = "SELECT * FROM data ORDER BY id DESC "
-  mycursor.execute(sql)
-  myresult = mycursor.fetchall()
-  return {'status': 'success','data':myresult}
+
 if __name__ == '__main__':
    app.run(debug = True)
